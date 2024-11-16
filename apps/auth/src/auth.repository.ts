@@ -12,7 +12,7 @@ export class AuthRepository {
   ) {}
 
   async teste(): Promise<any> {
-    return { status: 'ok' };
+    return { status: 'okaa' };
   }
 
   async createUser(email: string, password: string) {
