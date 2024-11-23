@@ -8,11 +8,11 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-  .setTitle('Trabalho faculdade Services')
-  .setDescription('Trabalho - Acesso a todos os serviços fornecidos')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .build();
+    .setTitle('Trabalho faculdade Services')
+    .setDescription('Trabalho - Acesso a todos os serviços fornecidos')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document, {

@@ -14,7 +14,9 @@ export class PostgresDatabaseService {
     return {
       type: 'postgres',
       host: this.configService.get(`${this.serviceName}_DB_HOST`),
-      port: parseInt(this.configService.get(`${this.serviceName}_DB_PORT`), 10) || 5432,
+      port:
+        parseInt(this.configService.get(`${this.serviceName}_DB_PORT`), 10) ||
+        5432,
       username: this.configService.get(`${this.serviceName}_DB_USERNAME`),
       password: this.configService.get(`${this.serviceName}_DB_PASSWORD`),
       database: this.configService.get(`${this.serviceName}_DB_NAME`),

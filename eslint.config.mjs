@@ -13,7 +13,11 @@ export default tseslint.config(
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-expressions': [
+        'error', 
+        { 'allowShortCircuit': true, 'allowTernary': true }
+      ],
     },
     ignores: ['eslint.config.mjs', '/*.js', 'node_modules', 'dist'],
-  },
+  }
 );

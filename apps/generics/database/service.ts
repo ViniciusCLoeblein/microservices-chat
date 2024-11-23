@@ -20,7 +20,9 @@ export class PostgresService implements OnApplicationBootstrap {
         [this.clientIdentifier],
       );
 
-      console.log('Identificador do cliente configurado com sucesso no PostgreSQL.');
+      console.log(
+        'Identificador do cliente configurado com sucesso no PostgreSQL.',
+      );
     } catch (error) {
       console.error(
         'Erro ao configurar o identificador do cliente no PostgreSQL:',

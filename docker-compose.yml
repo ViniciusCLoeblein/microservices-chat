@@ -27,9 +27,9 @@ services:
   postgres:
     image: postgres:17.1-bullseye
     environment:
-      POSTGRES_USER: chat
+      POSTGRES_USER: vini
       POSTGRES_PASSWORD: vini123
-      POSTGRES_DB: chat
+      POSTGRES_DB: game
     ports:
       - 5432:5432
     networks:

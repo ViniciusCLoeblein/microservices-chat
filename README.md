@@ -36,16 +36,3 @@ $ yarn run test:cov
 ```bash
 $ docker-compose up -d
 ```
-
-## Deps
-
-
-```bash
-# bcrypt
-$ npm install -g node-gyp
-
-PS choco install python visualstudio2022-workload-vctools -y
-```
-
-
-

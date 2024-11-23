@@ -1,8 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "apps/entities/user.entity";
-import { Repository } from "typeorm";
-import * as bcrypt from 'bcryptjs';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'apps/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthRepository {
@@ -15,11 +14,15 @@ export class AuthRepository {
     return { status: 'ok' };
   }
 
-  async createUser(email: string, password: string) {
-    return await this.userRepo.save({ email, password });
+  async createUser(data: Partial<User>) {
+    return await this.userRepo.save(data);
   }
 
   async findUser(email: string) {
     return await this.userRepo.findOneBy({ email });
+  }
+
+  async findUserById(id: string) {
+    return await this.userRepo.findOneBy({ id });
   }
 }

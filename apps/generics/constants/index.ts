@@ -1,1 +1,1 @@
-export type DateOrStringOrFunction = Date | string | (() => string)
+export type DateOrStringOrFunction = Date | string | (() => string);
