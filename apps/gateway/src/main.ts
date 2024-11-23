@@ -1,11 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter } from 'apps/generics/filters/rpc-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'verbose', 'debug', 'log'],
   });
+
+  app.setGlobalPrefix('api/teds');
 
   const config = new DocumentBuilder()
     .setTitle('Trabalho faculdade Services')
@@ -23,7 +26,9 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  app.enableCors();
+  app.useGlobalFilters(new AllExceptionsFilter());
+  await app.listen(process.env.PORT);
 }
 
 bootstrap();
