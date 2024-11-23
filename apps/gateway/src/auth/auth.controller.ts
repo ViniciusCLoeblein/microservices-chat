@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
@@ -25,6 +25,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Faz login' })
+  @HttpCode(200)
   @Post('login')
   login(@Body() data: LoginDto): Observable<any> {
     return this.authService.login(data);
