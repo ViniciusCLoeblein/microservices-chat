@@ -5,11 +5,13 @@ import {
   CreateMapDto,
   DeleteMapDto,
   GetMapDto,
+  GetMapsDto,
 } from 'apps/gateway/src/game/dto/map.dto';
 import {
   CreateGameDto,
   DeleteGameDto,
   GetGameDto,
+  GetGamesDto,
   PlayTurnDto,
 } from 'apps/gateway/src/game/dto/game.dto';
 
@@ -17,13 +19,12 @@ import {
 export class GameService {
   constructor(private readonly gameRepository: GameRepository) {}
 
-  async getMaps(): Promise<any> {
-    return this.gameRepository.findMap();
+  async getMaps(data: GetMapsDto): Promise<any> {
+    return this.gameRepository.findAllMaps(data);
   }
 
   async getMap(data: GetMapDto): Promise<any> {
-    const map = await this.gameRepository.findMap(Number(data.id));
-    return map[0] || null;
+    return await this.gameRepository.findMap(Number(data.id));
   }
 
   async createMap(data: CreateMapDto): Promise<any> {
@@ -38,7 +39,7 @@ export class GameService {
     return await this.gameRepository.deleteMap(Number(data.id));
   }
 
-  private rollDice(): number {
+  rollDice(): number {
     return Math.floor(Math.random() * 6) + 1;
   }
 
@@ -60,8 +61,6 @@ export class GameService {
   }
 
   async playTurn(data: PlayTurnDto): Promise<any> {
-    console.log('Recebido dados do turno: ', data);
-
     const game = await this.gameRepository.findGameById(Number(data.id));
     if (!game) {
       throw new Error('Jogo não encontrado');
@@ -129,8 +128,11 @@ export class GameService {
     };
   }
 
-  async getGames(): Promise<any[]> {
-    const games = await this.gameRepository.findAllGames();
+  async getGames(data: GetGamesDto): Promise<any> {
+    const { page, size } = data;
+
+    const { games, totalItems, totalPages } =
+      await this.gameRepository.findAllGames(data);
 
     const gamesInfo = games.map((game) => ({
       gameId: game.id,
@@ -153,7 +155,13 @@ export class GameService {
       map: game.map,
     }));
 
-    return gamesInfo;
+    return {
+      currentPage: page,
+      totalPages,
+      pageSize: size,
+      totalItems,
+      games: gamesInfo,
+    };
   }
 
   async deleteGame(data: DeleteGameDto): Promise<any> {

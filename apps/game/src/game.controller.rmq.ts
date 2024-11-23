@@ -6,11 +6,13 @@ import {
   CreateMapDto,
   DeleteMapDto,
   GetMapDto,
+  GetMapsDto,
 } from 'apps/gateway/src/game/dto/map.dto';
 import {
   CreateGameDto,
   DeleteGameDto,
   GetGameDto,
+  GetGamesDto,
   PlayTurnDto,
 } from 'apps/gateway/src/game/dto/game.dto';
 
@@ -19,8 +21,8 @@ export class GameControllerRMQ {
   constructor(private readonly gameService: GameService) {}
 
   @MessagePattern({ cmd: 'Game.GetMaps' })
-  getMaps(): Promise<any> {
-    return this.gameService.getMaps();
+  getMaps(data: GetMapsDto): Promise<any> {
+    return this.gameService.getMaps(data);
   }
 
   @MessagePattern({ cmd: 'Game.GetMap' })
@@ -54,8 +56,8 @@ export class GameControllerRMQ {
   }
 
   @MessagePattern({ cmd: 'Game.GetGames' })
-  getGames(): Promise<any> {
-    return this.gameService.getGames();
+  getGames(data: GetGamesDto): Promise<any> {
+    return this.gameService.getGames(data);
   }
 
   @MessagePattern({ cmd: 'Game.GetGame' })

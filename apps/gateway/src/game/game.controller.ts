@@ -6,12 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GameService } from './game.service';
 import { Observable } from 'rxjs';
-import { AlterMapDto, CreateMapDto } from './dto/map.dto';
-import { CreateGameDto } from './dto/game.dto';
+import { AlterMapDto, CreateMapDto, GetMapsDto } from './dto/map.dto';
+import { CreateGameDto, GetGamesDto } from './dto/game.dto';
 
 @Controller('game')
 @ApiTags('Games')
@@ -21,9 +22,10 @@ export class GameController {
 
   @ApiOperation({ summary: 'Todos os mapas' })
   @Get('maps')
-  getMaps(): Observable<any> {
-    return this.gameService.getMaps();
+  getMaps(@Query() data: GetMapsDto): Observable<any> {
+    return this.gameService.getMaps(data);
   }
+
   @ApiOperation({ summary: 'Um mapa' })
   @Get('map/:id')
   getMap(@Param('id') id: string): Observable<any> {
@@ -65,9 +67,10 @@ export class GameController {
 
   @ApiOperation({ summary: 'Info de todos os games' })
   @Get('games')
-  getGames(): Observable<any> {
-    return this.gameService.getGames();
+  getGames(@Query() data: GetGamesDto): Observable<any> {
+    return this.gameService.getGames(data);
   }
+
   @ApiOperation({ summary: 'Info do games' })
   @Get('game/:id')
   getGame(@Param('id') id: string): Observable<any> {

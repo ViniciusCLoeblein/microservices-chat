@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'apps/entities/game.entity';
 import { Map } from 'apps/entities/map.entity';
+import { GetGamesDto } from 'apps/gateway/src/game/dto/game.dto';
+import { GetMapsDto } from 'apps/gateway/src/game/dto/map.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -29,8 +31,28 @@ export class GameRepository {
     });
   }
 
-  async findMap(mapId?: number) {
-    return await this.mapRepository.find({ where: { id: mapId } });
+  async findMap(mapId: number) {
+    return await this.mapRepository.findOneBy({ id: mapId });
+  }
+
+  async findAllMaps({ page, size }: GetMapsDto) {
+    const take = size;
+    const skip = (page - 1) * size;
+
+    const [maps, totalMaps] = await this.mapRepository.findAndCount({
+      skip,
+      take,
+    });
+
+    const totalPages = Math.ceil(totalMaps / size);
+
+    return {
+      currentPage: Number(page),
+      totalPages,
+      pageSize: Number(size),
+      totalItems: totalMaps,
+      data: maps,
+    };
   }
 
   async deleteMap(mapId: number) {
@@ -41,10 +63,25 @@ export class GameRepository {
     return await this.gameRepository.save(game);
   }
 
-  async findAllGames(): Promise<Game[]> {
-    return await this.gameRepository.find({
+  async findAllGames({ page, size }: GetGamesDto): Promise<any> {
+    const take = size;
+    const skip = (page - 1) * size;
+
+    const [games, totalGames] = await this.gameRepository.findAndCount({
       relations: { map: true },
+      skip,
+      take,
     });
+
+    const totalPages = Math.ceil(totalGames / size);
+
+    return {
+      currentPage: Number(page),
+      totalPages,
+      pageSize: Number(size),
+      totalItems: totalGames,
+      data: games,
+    };
   }
 
   async deleteGame(id: number) {

@@ -19,10 +19,6 @@ export class PostgresService implements OnApplicationBootstrap {
         `SET application_name = $1`, // Usando `application_name` para rastreamento.
         [this.clientIdentifier],
       );
-
-      console.log(
-        'Identificador do cliente configurado com sucesso no PostgreSQL.',
-      );
     } catch (error) {
       console.error(
         'Erro ao configurar o identificador do cliente no PostgreSQL:',

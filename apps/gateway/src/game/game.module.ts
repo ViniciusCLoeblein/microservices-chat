@@ -19,6 +19,6 @@ import { RmqService } from 'apps/generics/rmq';
     },
     GameService,
   ],
-  exports: [],
+  exports: [GameService],
 })
 export class GameModule {}

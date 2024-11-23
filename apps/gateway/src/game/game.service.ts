@@ -6,11 +6,13 @@ import {
   CreateMapDto,
   DeleteMapDto,
   GetMapDto,
+  GetMapsDto,
 } from './dto/map.dto';
 import {
   CreateGameDto,
   DeleteGameDto,
   GetGameDto,
+  GetGamesDto,
   PlayTurnDto,
 } from './dto/game.dto';
 
@@ -21,8 +23,8 @@ export class GameService {
     private readonly clientRMQ: ClientRMQ,
   ) {}
 
-  getMaps(): Observable<any> {
-    return this.clientRMQ.send({ cmd: 'Game.GetMaps' }, {});
+  getMaps(data: GetMapsDto): Observable<any> {
+    return this.clientRMQ.send({ cmd: 'Game.GetMaps' }, data);
   }
 
   getMap(data: GetMapDto): Observable<any> {
@@ -49,8 +51,8 @@ export class GameService {
     return this.clientRMQ.send({ cmd: 'Game.PlayTurn' }, data);
   }
 
-  getGames(): Observable<any> {
-    return this.clientRMQ.send({ cmd: 'Game.GetGames' }, {});
+  getGames(data: GetGamesDto): Observable<any> {
+    return this.clientRMQ.send({ cmd: 'Game.GetGames' }, data);
   }
 
   getGame(data: GetGameDto): Observable<any> {
