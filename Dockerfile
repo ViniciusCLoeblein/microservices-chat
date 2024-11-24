@@ -35,4 +35,4 @@ RUN apt-get update && apt-get install -y \
 RUN npm install --force  
 RUN npm run build -- ${APP_NAME}
 
-EXPOSE 3000
+EXPOSE 8080

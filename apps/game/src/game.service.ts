@@ -108,6 +108,7 @@ export class GameService {
     }
 
     return {
+      id: game.id,
       player1: {
         name: game.player1Name,
         position: game.player1Position,
@@ -124,17 +125,20 @@ export class GameService {
             ? game.player1Name
             : game.player2Name
           : null,
-      map: game.map,
+      map: game?.map,
     };
   }
 
   async getGames(data: GetGamesDto): Promise<any> {
     const { page, size } = data;
 
-    const { games, totalItems, totalPages } =
-      await this.gameRepository.findAllGames(data);
+    const {
+      data: games,
+      totalItems,
+      totalPages,
+    } = await this.gameRepository.findAllGames(data);
 
-    const gamesInfo = games.map((game) => ({
+    const gamesInfo = games?.map((game) => ({
       gameId: game.id,
       player1: {
         name: game.player1Name,
@@ -152,7 +156,7 @@ export class GameService {
             ? game.player1Name
             : game.player2Name
           : null,
-      map: game.map,
+      map: game?.map,
     }));
 
     return {
