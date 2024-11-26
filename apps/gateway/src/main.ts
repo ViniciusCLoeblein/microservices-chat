@@ -8,7 +8,7 @@ async function bootstrap() {
     logger: ['error', 'warn', 'verbose', 'debug', 'log'],
   });
 
-  app.setGlobalPrefix('api/teds');
+  app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('Trabalho faculdade Services')

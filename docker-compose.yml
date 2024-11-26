@@ -4,6 +4,46 @@ networks:
   app-network:
 
 services:
+  gateway:
+    image: gateway:1.0.1
+    ports:
+      - 8080:8080
+    command: ["bash", "./deploy.sh", "gateway"]
+    networks:
+      - app-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  auth:
+    image: auth:1.0.0
+    command: ["bash", "./deploy.sh", "auth"]
+    depends_on:
+      - gateway
+      - rabbitmq
+    networks:
+      - app-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  game:
+    image: game:1.0.0
+    command: ["bash", "./deploy.sh", "game"]
+    depends_on:
+      - gateway
+      - rabbitmq
+    networks:
+      - app-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
   rabbitmq:
     image: rabbitmq:4.1-rc-management
     environment:

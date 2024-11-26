@@ -21,9 +21,9 @@ export class PostgresDatabaseService {
       password: this.configService.get(`${this.serviceName}_DB_PASSWORD`),
       database: this.configService.get(`${this.serviceName}_DB_NAME`),
       entities: [join(__dirname, '**', 'entities', '**', '*.entity.{ts,js}')],
-      synchronize: this.configService.get('DB_SYNC') === 'true', // Use `true` apenas em desenvolvimento, nunca em produção.
+      synchronize: true, // Use `true` apenas em desenvolvimento, nunca em produção.
       autoLoadEntities: true,
-      logging: this.configService.get('DB_LOGGING') === 'true',
+      logging: true,
     };
   }
 }

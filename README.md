@@ -36,3 +36,7 @@ $ yarn run test:cov
 ```bash
 $ docker-compose up -d
 ```
+
+```bash
+$ ./push-image.sh gateway gateway
+```
